@@ -4,6 +4,15 @@ import json
 
 st.title("Calculator App")
 st.write("This app connects to a FastAPI calculator service.")
+
+# Define the API base URL
+<<<<<<< HEAD
+=======
+# api_url = "http://0.0.0.0:9321"
+>>>>>>> efc449e (added week3 content)
+api_url = "https://api-example-9.onrender.com"
+
+# Initialize session state to store the calculator display and current operation
 if 'display' not in st.session_state:
     st.session_state.display = '0'
 if 'first_number' not in st.session_state:
@@ -18,12 +27,9 @@ if 'api_response' not in st.session_state:
     st.session_state.api_response = None
 
 # Display the calculator screen
-st.text_input("Calculator Display", value=st.session_state.display,
-              key="display_field", disabled=True)
+st.text_input("Calculator Display", value=st.session_state.display, key="display_field", disabled=True)
 
 # Function to handle number button clicks
-
-
 def number_click(number):
     if st.session_state.expecting_second_number:
         st.session_state.display = str(number)
@@ -34,16 +40,12 @@ def number_click(number):
         st.session_state.display += str(number)
 
 # Function to handle operation button clicks
-
-
 def operation_click(op):
     st.session_state.first_number = float(st.session_state.display)
     st.session_state.operation = op
     st.session_state.expecting_second_number = True
 
 # Function to clear the calculator
-
-
 def clear_calculator():
     st.session_state.display = '0'
     st.session_state.first_number = None
@@ -53,8 +55,6 @@ def clear_calculator():
     st.session_state.api_response = None
 
 # Function to calculate result by calling the API
-
-
 def calculate_result():
     try:
         if st.session_state.first_number is None or st.session_state.operation is None:
@@ -68,8 +68,7 @@ def calculate_result():
 
         # Make the API call
         # response = requests.get(endpoint, params={"a": first_num, "b": second_num})
-        response = requests.post(
-            endpoint, json={"a": first_num, "b": second_num})
+        response = requests.post(endpoint, json={"a": first_num, "b": second_num})
 
         # Check if the request was successful
         if response.status_code == 200:
@@ -85,7 +84,6 @@ def calculate_result():
     except Exception as e:
         st.session_state.display = f"Error: {str(e)[:10]}"
 
-
 # Create the calculator layout with CSS Grid-like appearance
 col1, col2, col3, col4 = st.columns(4)
 
@@ -97,8 +95,7 @@ with col2:
 with col3:
     st.button("9", on_click=number_click, args=(9,), use_container_width=True)
 with col4:
-    st.button("Add (+)", on_click=operation_click,
-              args=("add",), use_container_width=True)
+    st.button("Add (+)", on_click=operation_click, args=("add",), use_container_width=True)
 
 # Row 2 of the calculator (4, 5, 6, -)
 with col1:
@@ -108,8 +105,7 @@ with col2:
 with col3:
     st.button("6", on_click=number_click, args=(6,), use_container_width=True)
 with col4:
-    st.button("Sub (-)", on_click=operation_click,
-              args=("subtract",), use_container_width=True)
+    st.button("Sub (-)", on_click=operation_click, args=("subtract",), use_container_width=True)
 
 # Row 3 of the calculator (1, 2, 3, C)
 with col1:
